@@ -3,6 +3,8 @@ As dotLess is of abysmal quality, this repository contains some bug fixes. I won
 - Fixed all imports being marked as 'once'
 - Manhandled the build to work for our purposes
 
+As is to be expected their build does not simply run. I made it work by taking out junk and running `invoke-psake` in the right directory (one that contains psake.ps1).
+
 What follows is the original dotLess README:
 
 Just Want a .dll?
