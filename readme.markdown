@@ -1,3 +1,10 @@
+As dotLess is of abysmal quality, this repository contains some bug fixes. I won't be wasting my time with PRs as they have > 100 open and seem rather inactive.
+
+- Fixed all imports being marked as 'once'
+- Manhandled the build to work for our purposes
+
+What follows is the original dotLess README:
+
 Just Want a .dll?
 =================
 
