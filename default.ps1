@@ -12,8 +12,9 @@ properties {
     $version = Get-Git-Version
 }
 
-task default -depends Release
-
+write-host "A"
+task -Name default -depends Release
+write-host "B"
 task Clean {
     remove-item -force -recurse $build_dir -ErrorAction SilentlyContinue 
     remove-item -force -recurse $release_dir -ErrorAction SilentlyContinue 
@@ -41,7 +42,7 @@ For the client only dll on its own, see the DotlessClientOnly package.";
 
     Generate-NuGet `
         -file "$build_dir\Dotless.nuspec" `
-        -id "dotless" `
+        -id "ml_custom_dotless" `
         -version $version `
         -authors $authors `
         -description $nugetDotless
@@ -100,6 +101,7 @@ task Build -depends Init {
     }
 }
 
+<#
 task Test -depends Build {
 	$buildSettings = (
 		($source_dir + '\dotless.Test\dotless.Test.csproj'),
@@ -122,6 +124,7 @@ task Test -depends Build {
     }
     cd $old
 }
+#>
 
 task Merge -depends Build {
     $old = pwd
@@ -151,7 +154,6 @@ task Merge -depends Build {
     & $lib_dir\ilmerge\ILMerge.exe $filename-partial.dll `
         Pandora.dll `
         Microsoft.Practices.ServiceLocation.dll `
-        dotless.AspNet.dll `
         /out:$filename `
         /internalize:../src/internalize-exclusion-list.txt `
         /keyfile:../src/dotless-open-source.snk `
@@ -235,7 +237,7 @@ exit 1 unless result"
     gem build dotless.gemspec
 }
 
-task Release -depends Test, Merge, NuGetPackage, NuGetClientOnlyPackage, t4css {
+task Release -depends Merge, NuGetPackage, NuGetClientOnlyPackage, t4css {
     $commit = Get-Git-Commit
     $filename = "dotless.core"
     & $lib_dir\7zip\7za.exe a $release_dir\dotless-$commit.zip `

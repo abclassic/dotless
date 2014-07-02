@@ -1135,11 +1135,10 @@ namespace dotless.Core.Parser
             var index = parser.Tokenizer.Location.Index;
 
             var importMatch = parser.Tokenizer.Match(@"@import(-(once))?\s+");
+            var isOnce = parser.Tokenizer.Match(@"@import-once\s+");
 
             if (importMatch && (path = Quoted(parser) || Url(parser)))
             {
-                const bool isOnce = true;
-                
                 var features = MediaFeatures(parser);
 
                 Expect(parser, ';', "Expected ';' (possibly unrecognised media sequence)");
